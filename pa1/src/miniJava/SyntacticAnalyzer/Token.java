@@ -5,16 +5,15 @@ public class Token {
 	private String _text;
 	
 	public Token(TokenType type, String text) {
-		// TODO: Store the token's type and text
+		this._type = type;
+		this._text = text;
 	}
 	
 	public TokenType getTokenType() {
-		// TODO: Return the token type
-		return null;
+		return this._type;
 	}
 	
 	public String getTokenText() {
-		// TODO: Return the token text
-		return null;
+		return this._text;
 	}
 }
