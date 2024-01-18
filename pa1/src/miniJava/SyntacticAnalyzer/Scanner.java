@@ -31,7 +31,7 @@ public class Scanner {
         // TODO: This function should check the current char to determine what the token could be.
         // TODO: Consider what happens if the current char is whitespace
         // TODO: Consider what happens if there is a comment (// or /* */)
-        skipWhiteSpaceAndComments(); // Could potentially inline the function here.
+        skipWhitespace();
 
         // TODO: What happens if there are no more tokens?
         TokenType tokenType = scanTokenType();
@@ -96,19 +96,64 @@ public class Scanner {
                 return TokenType.BINARY_OPERATOR;
             case '/':
                 takeIt();
-                return TokenType.BINARY_OPERATOR;
+                if (isComment()) {
+                    this._currentText = new StringBuilder();
+                    if (_currentChar == '*') {
+                       skipBlockComment();
+                    }
+                    else {
+                        skipInlineComment();
+                    }
+                    return scanTokenType();
+                }
+                else {
+                    return TokenType.BINARY_OPERATOR;
+                }
             case '+':
                 takeIt();
                 return TokenType.BINARY_OPERATOR;
             case '-':
                 takeIt();
-                return TokenType.MINUS;
+                return TokenType.MINUS; // Has to be its own case, since it could be either an unary or binary operator.
             case '.':
                 takeIt();
                 return TokenType.DOT;
             case ';':
                 takeIt();
                 return TokenType.SEMICOLON;
+            case '&': // Expand
+                takeIt();
+                if (this._currentChar == '&') {
+                    takeIt();
+                }
+                return TokenType.BINARY_OPERATOR;
+            case '|': //Expand
+                takeIt();
+                if (this._currentChar == '|') {
+                    takeIt();
+                }
+                return TokenType.BINARY_OPERATOR;
+            case '=': //Expand
+                takeIt();
+                if (this._currentChar == '=') {
+                    takeIt();
+                    return TokenType.BINARY_OPERATOR;
+                }
+                return TokenType.ASSIGNMENT; // ASSIGNMENT
+            case '>': //Expand
+            case '<':
+                takeIt();
+                if (this._currentChar == '=') {
+                    takeIt();
+                }
+                return TokenType.BINARY_OPERATOR;
+            case '!': //Expand
+                takeIt();
+                if (this._currentChar == '=') {
+                    takeIt();
+                    return TokenType.BINARY_OPERATOR;
+                }
+                return TokenType.UNARY_OPERATOR;
             case '(':
                 takeIt();
                 return TokenType.LEFT_PAREN;
@@ -131,58 +176,46 @@ public class Scanner {
         }
     }
 
+    /**
+     * Handles processing of identifiers and other key 'words'. Binary operatios and other operators are not handled here.
+     * @return {@link TokenType} that represents the string. This can only return {@link TokenType#IDENTIFIER} or some other keyword.
+     *
+     */
     private TokenType parseMultiCharacterToken() {
         // Tokens to parse here are && || >= <= == != true false identifiers if else
-
-        return TokenType.DOT;
-    }
-
-    /*
-     * The invariant in this function is that when either {@link #skipWhitespace()} or {@link #skipComment()} returns,
-     * {@link #_currentChar} is the set to a non-whitespace/comment character.
-     */
-    private void skipWhiteSpaceAndComments() {
-        while (!eot && (_currentChar == ' ' || _currentChar == '/') ) {
-            if (_currentChar == ' ') {
-                skipWhitespace();
-            }
-            else {
-                takeIt();
-                skipComment();
-            }
+        while (!eot && !KeyChar.isIdentifierTerminator(_currentChar)) {
+            takeIt();
+        }
+        String currentString = _currentText.toString();
+        if (KeyWord.isKeyWord(currentString)) {
+            return KeyWord.determineTokenType(currentString);
+        }
+        else {
+            return TokenType.IDENTIFIER;
         }
     }
 
     private void skipWhitespace() {
-        while (!eot && _currentChar == ' ') {
+        while (!eot && ((_currentChar == ' ') || _currentChar == '\n')) { // What about tab?
             skipIt();
         }
     }
 
-    /**
-     * Going into this function, you know that the last character was a `/`.
-     */
-    private void skipComment() {
-        nextChar();
-        if (_currentChar == '/') {
-            _currentText = new StringBuilder(); // You have to clear the clear, b/c you have to take the initial `/`, since it might be a division symbol.
-            skipInlineComment();
-        } else if (_currentChar == '*') {
-            _currentText = new StringBuilder(); // You have to clear the clear, b/c you have to take the initial `/`, since it might be a division symbol.
-            skipBlockComment();
-        }
-        // The else block is not necessary, if the next character is not `/` or `*`, then you have to be an assignment operator.
+    private boolean isComment() {
+        return _currentText.charAt(_currentText.length() - 1) == '/';
     }
 
     private void skipInlineComment() {
         while (!eot && _currentChar != '\n') {
             skipIt();
         }
+        skipWhitespace();
     }
 
     private void skipBlockComment() {
         findEndOfBlockComment();
         skipIt();
+        skipWhitespace();
     }
 
     private void findEndOfBlockComment() {
@@ -191,10 +224,6 @@ public class Scanner {
         }
         nextChar(); // Get the character after '*'.
         if (_currentChar != '/') {
-            _errors.reportError("Invalid comment syntax. Expected a \\/ after a \\*, but got " + _currentChar + ".");
-            eot = true;
-        }
-        else {
             findEndOfBlockComment();
         }
     }

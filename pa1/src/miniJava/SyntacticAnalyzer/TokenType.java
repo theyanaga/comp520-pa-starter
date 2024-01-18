@@ -22,13 +22,21 @@ public enum TokenType {
     RIGHT_PAREN, // )
     SEMICOLON,
     DOT,
-    EQUALS,
+    ASSIGNMENT,
+    NEGATION,
     UNARY_OPERATOR,
     BINARY_OPERATOR,
-    STATIC,
+    ACCESS,
     VISIBILITY,
     INT_LITERAL,
     BOOLEAN_LITERAL,
     MINUS,
+    IF,
+    ELSE,
+    BOOL_LITERAL,
+    INTEGER,
+    VOID,
+    NEW,
+    RETURN,
     EOT; // This signals the end.
 }
