@@ -151,6 +151,7 @@ public class Parser {
     public void parseReference() {
         accept(TokenType.THIS, TokenType.IDENTIFIER);
         while (_currentToken.getTokenType() == TokenType.DOT) {
+            accept(TokenType.DOT);
             accept(TokenType.THIS, TokenType.IDENTIFIER);
         }
     }
@@ -264,22 +265,22 @@ public class Parser {
                     accept(TokenType.LEFT_BRACKET);
                     if (_currentToken.getTokenType() != TokenType.RIGHT_BRACKET) {
                         parseExpression();
+                        accept(TokenType.RIGHT_BRACKET);
+                    } else {
+                        accept(TokenType.RIGHT_BRACKET);
+                        accept(TokenType.IDENTIFIER); // How to handle this ?
                     }
-                    accept(TokenType.RIGHT_BRACKET);
                     accept(TokenType.ASSIGNMENT);
                     parseExpression();
                     accept(TokenType.SEMICOLON);
-
-                }
-                else if (_currentToken.getTokenType() == TokenType.LEFT_PAREN) {
+                } else if (_currentToken.getTokenType() == TokenType.LEFT_PAREN) {
                     accept(TokenType.LEFT_PAREN);
                     if (_currentToken.getTokenType() != TokenType.RIGHT_PAREN) {
                         parseArgumentList();
                     }
                     accept(TokenType.RIGHT_PAREN);
                     accept(TokenType.SEMICOLON);
-                }
-                else if (_currentToken.getTokenType() == TokenType.DOT) { // reference
+                } else if (_currentToken.getTokenType() == TokenType.DOT) { // reference
                     accept(TokenType.DOT);
                     parseReference();
                     if (_currentToken.getTokenType() == TokenType.LEFT_BRACKET) {
@@ -292,8 +293,7 @@ public class Parser {
                         parseArgumentList();
                         accept(TokenType.RIGHT_PAREN);
                         accept(TokenType.SEMICOLON);
-                    }
-                    else if (_currentToken.getTokenType() == TokenType.ASSIGNMENT) {
+                    } else if (_currentToken.getTokenType() == TokenType.ASSIGNMENT) {
                         accept(TokenType.ASSIGNMENT);
                         parseExpression();
                         accept(TokenType.SEMICOLON);
