@@ -96,6 +96,7 @@ public class Scanner {
                 return TokenType.BINARY_OPERATOR;
             case '/':
                 takeIt();
+                skipWhitespace();
                 if (isComment()) {
                     this._currentText = new StringBuilder();
                     if (_currentChar == '*') {
@@ -213,7 +214,7 @@ public class Scanner {
     }
 
     private boolean isComment() {
-        return _currentText.charAt(_currentText.length() - 1) == '/';
+        return _currentText.charAt(_currentText.length() - 1) == '/' && this._currentChar == '/';
     }
 
     private void skipInlineComment() {

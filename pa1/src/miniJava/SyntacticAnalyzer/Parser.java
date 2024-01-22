@@ -86,10 +86,9 @@ public class Parser {
                 }
                 accept(TokenType.RIGHT_PAREN);
                 accept(TokenType.LEFT_CURLY);
-                do {
+                while (_currentToken.getTokenType() != TokenType.RIGHT_CURLY) {
                     parseStatement();
                 }
-                while (_currentToken.getTokenType() != TokenType.RIGHT_CURLY);
                 accept(TokenType.RIGHT_CURLY);
             }
         }
