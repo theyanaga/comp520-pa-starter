@@ -97,7 +97,7 @@ public class Scanner {
             case '/':
                 takeIt();
                 skipWhitespace();
-                if (isComment()) {
+                if (!eot && isComment()) {
                     this._currentText = new StringBuilder();
                     if (_currentChar == '*') {
                         skipIt();
