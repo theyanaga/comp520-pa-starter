@@ -123,6 +123,9 @@ public class Scanner {
             case ';':
                 takeIt();
                 return TokenType.SEMICOLON;
+            case '_':
+                takeIt();
+                return TokenType.UNDER_SCORE;
             case ',':
                 takeIt();
                 return TokenType.COMMA;

@@ -14,6 +14,7 @@ public enum KeyChar {
     DOT('.'),
     COMMA(','),
     FORWARD_SLASH('/'),
+    UNDER_SCORE('_'),
     ASTERISK('*'),
     PLUS('+'),
     MINUS('-'),
@@ -56,17 +57,18 @@ public enum KeyChar {
 
     private static final Set<KeyChar> bracketsAndDots =
             Set.of(
-    KeyChar.DOT,
-    KeyChar.SEMICOLON,
-    KeyChar.COMMA,
-    KeyChar.RIGHT_BRACKET,
-    KeyChar.LEFT_BRACKET,
-    KeyChar.LEFT_PAREN,
-    KeyChar.RIGHT_PAREN,
-    KeyChar.LEFT_CURLY,
-    KeyChar.RIGHT_CURLY,
-    KeyChar.WHITE_SPACE
-        );
+                    KeyChar.DOT,
+                    KeyChar.SEMICOLON,
+                    KeyChar.COMMA,
+                    KeyChar.UNDER_SCORE,
+                    KeyChar.RIGHT_BRACKET,
+                    KeyChar.LEFT_BRACKET,
+                    KeyChar.LEFT_PAREN,
+                    KeyChar.RIGHT_PAREN,
+                    KeyChar.LEFT_CURLY,
+                    KeyChar.RIGHT_CURLY,
+                    KeyChar.WHITE_SPACE
+            );
 
     public static Set<KeyChar> getIdentifierTerminators() {
         return Stream.of(bracketsAndDots, binaryOps).flatMap(Collection::stream).collect(Collectors.toUnmodifiableSet());

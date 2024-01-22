@@ -25,6 +25,7 @@ public enum TokenType {
     SEMICOLON,
     COMMA,
     DOT,
+    UNDER_SCORE,
     ASSIGNMENT,
     UNARY_OPERATOR,
     BINARY_OPERATOR,
