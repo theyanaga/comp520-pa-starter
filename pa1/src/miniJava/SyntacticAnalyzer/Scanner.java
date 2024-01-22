@@ -214,7 +214,7 @@ public class Scanner {
     }
 
     private boolean isComment() {
-        return _currentText.charAt(_currentText.length() - 1) == '/' && this._currentChar == '/';
+        return _currentText.charAt(_currentText.length() - 1) == '/' && (this._currentChar == '/' || this._currentChar == '*');
     }
 
     private void skipInlineComment() {
