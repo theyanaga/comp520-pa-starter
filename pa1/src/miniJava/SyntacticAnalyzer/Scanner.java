@@ -99,6 +99,7 @@ public class Scanner {
                 if (isComment()) {
                     this._currentText = new StringBuilder();
                     if (_currentChar == '*') {
+                        skipIt();
                        skipBlockComment();
                     }
                     else {
