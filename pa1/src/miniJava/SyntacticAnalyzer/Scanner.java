@@ -237,6 +237,9 @@ public class Scanner {
         while (!eot && _currentChar != '*') {
             skipIt();
         }
+        if (eot) {
+            return;
+        }
         nextChar(); // Get the character after '*'.
         if (_currentChar != '/') {
             findEndOfBlockComment();

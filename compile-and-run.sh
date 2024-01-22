@@ -1,1 +1,1 @@
-java -cp bin miniJava.Compiler test-cases/$1
+java -cp bin miniJava.Compiler $1
