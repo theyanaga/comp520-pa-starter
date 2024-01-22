@@ -206,7 +206,7 @@ public class Scanner {
     }
 
     private void skipWhitespace() {
-        while (!eot && ((_currentChar == ' ') || _currentChar == '\n')) { // What about tab?
+        while (!eot && ((_currentChar == ' ') || _currentChar == '\n' || _currentChar == '\r' || _currentChar == '\t')) { // What about tab?
             skipIt();
         }
     }
@@ -216,7 +216,7 @@ public class Scanner {
     }
 
     private void skipInlineComment() {
-        while (!eot && _currentChar != '\n') {
+        while (!eot && (_currentChar != '\n' && _currentChar != '\r' && _currentChar != '\t')) {
             skipIt();
         }
         skipWhitespace();

@@ -41,7 +41,7 @@ public class Parser {
     private void parseProgram() throws SyntaxError {
         // TODO: Keep parsing class declarations until eot
         if (_currentToken.getTokenType() == TokenType.EOT) {
-            return;
+            accept(TokenType.EOT);
         } else {
             parseClassDeclaration();
         }
@@ -59,6 +59,7 @@ public class Parser {
             parseFieldOrMethodDeclaration();
         }
         accept(TokenType.RIGHT_CURLY);
+        accept(TokenType.EOT);
     }
 
     private void parseFieldOrMethodDeclaration() {
