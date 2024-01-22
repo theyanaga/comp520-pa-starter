@@ -43,7 +43,10 @@ public class Parser {
         if (_currentToken.getTokenType() == TokenType.EOT) {
             accept(TokenType.EOT);
         } else {
-            parseClassDeclaration();
+            while (_currentToken.getTokenType() != TokenType.EOT) {
+                parseClassDeclaration();
+            }
+            accept(TokenType.EOT);
         }
     }
 
@@ -59,7 +62,6 @@ public class Parser {
             parseFieldOrMethodDeclaration();
         }
         accept(TokenType.RIGHT_CURLY);
-        accept(TokenType.EOT);
     }
 
     private void parseFieldOrMethodDeclaration() {
@@ -79,11 +81,10 @@ public class Parser {
                 accept(TokenType.SEMICOLON);
             } else {
                 accept(TokenType.LEFT_PAREN);
-                if (_currentToken.getTokenType() == TokenType.RIGHT_PAREN) {
-                    accept(TokenType.RIGHT_PAREN);
-                } else {
+                if (_currentToken.getTokenType() != TokenType.RIGHT_PAREN) {
                     parseParameterList();
                 }
+                accept(TokenType.RIGHT_PAREN);
                 accept(TokenType.LEFT_CURLY);
                 do {
                     parseStatement();
