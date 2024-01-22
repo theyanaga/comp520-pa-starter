@@ -38,11 +38,11 @@ public enum KeyWord {
     }
 
     public static TokenType determineTokenType(String val) {
-        Optional<KeyWord> optKeyWord = Arrays.stream(values()).filter(v -> v.getText().equalsIgnoreCase(val)).findFirst();
+        Optional<KeyWord> optKeyWord = Arrays.stream(values()).filter(v -> v.getText().equals(val)).findFirst();
         return optKeyWord.get().getTokenType(); // Could be refactored.
     }
 
     public static boolean isKeyWord(String val) {
-        return Arrays.stream(values()).map(KeyWord::getText).anyMatch(s -> s.equalsIgnoreCase(val));
+        return Arrays.stream(values()).map(KeyWord::getText).anyMatch(s -> s.equals(val));
     }
 }
