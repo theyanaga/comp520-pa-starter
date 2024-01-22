@@ -206,7 +206,6 @@ public class Parser {
     }
 
     public void parseObjectOrArrayCreation() {
-        accept(TokenType.LEFT_PAREN);
         if (_currentToken.getTokenType() == TokenType.INTEGER) {
             accept(TokenType.INTEGER);
             accept(TokenType.LEFT_BRACKET);
