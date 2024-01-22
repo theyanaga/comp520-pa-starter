@@ -55,10 +55,9 @@ public class Parser {
         accept(TokenType.IDENTIFIER);
         accept(TokenType.LEFT_CURLY);
         // Parse field or method declaration.
-        do {
+        while (_currentToken.getTokenType() != TokenType.RIGHT_CURLY) {
             parseFieldOrMethodDeclaration();
         }
-        while (_currentToken.getTokenType() != TokenType.RIGHT_CURLY);
         accept(TokenType.RIGHT_CURLY);
     }
 
