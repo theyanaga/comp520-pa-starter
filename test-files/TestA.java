@@ -3,4 +3,12 @@ class TestA {
         x = 1 + 3;
         int x = 0;
     }
-} 
+}
+
+class TestB {
+
+}
+
+class TestC {
+
+}

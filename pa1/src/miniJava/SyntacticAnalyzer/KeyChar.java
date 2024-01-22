@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 public enum KeyChar {
     SEMICOLON(';'),
     DOT('.'),
+    COMMA(','),
     FORWARD_SLASH('/'),
     ASTERISK('*'),
     PLUS('+'),
@@ -57,6 +58,7 @@ public enum KeyChar {
             Set.of(
     KeyChar.DOT,
     KeyChar.SEMICOLON,
+    KeyChar.COMMA,
     KeyChar.RIGHT_BRACKET,
     KeyChar.LEFT_BRACKET,
     KeyChar.LEFT_PAREN,
@@ -66,20 +68,8 @@ public enum KeyChar {
     KeyChar.WHITE_SPACE
         );
 
-    public static Set<Character> getSpecialCharactersAndWords() {
-        return Arrays.stream(values()).map(KeyChar::getCharacter).collect(Collectors.toUnmodifiableSet());
-    }
-
     public static Set<KeyChar> getIdentifierTerminators() {
         return Stream.of(bracketsAndDots, binaryOps).flatMap(Collection::stream).collect(Collectors.toUnmodifiableSet());
-    }
-
-    public static Set<KeyChar> getBracketsAndDots() {
-        return bracketsAndDots;
-    }
-
-    public static Set<KeyChar> getBinaryOps() {
-        return binaryOps;
     }
 
     public static boolean isBinaryOps(char val) {

@@ -6,10 +6,13 @@ import java.util.Optional;
 public enum KeyWord {
     IF("if", TokenType.IF),
     ELSE("else", TokenType.ELSE),
+    WHILE("while", TokenType.WHILE),
     NEW("new", TokenType.NEW),
     TRUE("true", TokenType.BOOL_LITERAL),
     FALSE("false", TokenType.BOOL_LITERAL),
     INT("int", TokenType.INTEGER),
+    BOOLEAN("boolean", TokenType.BOOLEAN),
+    THIS("this", TokenType.THIS),
     CLASS("class", TokenType.CLASS),
     VOID("void", TokenType.VOID),
     STATIC("static", TokenType.ACCESS),

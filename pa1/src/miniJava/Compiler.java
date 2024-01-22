@@ -20,8 +20,6 @@ public class Compiler {
         Scanner scanner = new Scanner(in, errorReporter);
         Parser parser = new Parser(scanner, errorReporter);
         parser.parse();
-
-
         if (errorReporter.hasErrors()) {
             System.out.println("Error");
             errorReporter.outputErrors();

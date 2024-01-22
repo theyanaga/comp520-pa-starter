@@ -121,8 +121,12 @@ public class Scanner {
             case ';':
                 takeIt();
                 return TokenType.SEMICOLON;
+            case ',':
+                takeIt();
+                return TokenType.COMMA;
             case '&': // Expand
                 takeIt();
+                // Throw lexical error.
                 if (this._currentChar == '&') {
                     takeIt();
                 }
@@ -166,6 +170,12 @@ public class Scanner {
             case '}':
                 takeIt();
                 return TokenType.RIGHT_CURLY;
+            case '[':
+                takeIt();
+                return TokenType.LEFT_BRACKET;
+            case ']':
+                takeIt();
+                return TokenType.RIGHT_BRACKET;
             case '0': case '1': case '2': case '3': case '4': case '5': case '6': case '7': case '8': case '9':
                 while(isDigit(_currentChar)) {
                     takeIt();
