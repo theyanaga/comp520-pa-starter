@@ -263,12 +263,24 @@ public class Parser {
                 accept(TokenType.IDENTIFIER);
                 if (_currentToken.getTokenType() == TokenType.LEFT_BRACKET) { // array type
                     accept(TokenType.LEFT_BRACKET);
+                    if (_currentToken.getTokenType() != TokenType.RIGHT_BRACKET) {
+                        parseExpression();
+                    }
                     accept(TokenType.RIGHT_BRACKET);
-                    accept(TokenType.IDENTIFIER);
                     accept(TokenType.ASSIGNMENT);
                     parseExpression();
                     accept(TokenType.SEMICOLON);
-                } else if (_currentToken.getTokenType() == TokenType.DOT) { // reference
+
+                }
+                else if (_currentToken.getTokenType() == TokenType.LEFT_PAREN) {
+                    accept(TokenType.LEFT_PAREN);
+                    if (_currentToken.getTokenType() != TokenType.RIGHT_PAREN) {
+                        parseArgumentList();
+                    }
+                    accept(TokenType.RIGHT_PAREN);
+                    accept(TokenType.SEMICOLON);
+                }
+                else if (_currentToken.getTokenType() == TokenType.DOT) { // reference
                     accept(TokenType.DOT);
                     parseReference();
                     if (_currentToken.getTokenType() == TokenType.LEFT_BRACKET) {
@@ -281,7 +293,11 @@ public class Parser {
                         parseArgumentList();
                         accept(TokenType.RIGHT_PAREN);
                         accept(TokenType.SEMICOLON);
-
+                    }
+                    else if (_currentToken.getTokenType() == TokenType.ASSIGNMENT) {
+                        accept(TokenType.ASSIGNMENT);
+                        parseExpression();
+                        accept(TokenType.SEMICOLON);
                     }
                 } else if (_currentToken.getTokenType() == TokenType.IDENTIFIER) { // type
                     accept(TokenType.IDENTIFIER);
