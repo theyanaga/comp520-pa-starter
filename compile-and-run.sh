@@ -1,1 +1,1 @@
-java -cp bin miniJava.Compiler $1
+java -cp bin miniJava.Compiler pa1-tests-partial/$1

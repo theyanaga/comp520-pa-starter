@@ -170,6 +170,9 @@ public class Parser {
                 accept(TokenType.BOOL_LITERAL);
                 break;
             case MINUS:
+                accept(TokenType.MINUS);
+                parseExpression();
+                break;
             case UNARY_OPERATOR:
                 accept(TokenType.UNARY_OPERATOR);
                 parseExpression();
