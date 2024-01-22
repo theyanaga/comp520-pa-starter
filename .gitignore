@@ -24,4 +24,4 @@ hs_err_pid*
 replay_pid*
 
 # Any tests 
-./pa1-tests-partial/*
+pa1-tests-partial/*
