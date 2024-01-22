@@ -199,8 +199,8 @@ public class Parser {
                 accept(TokenType.THIS, TokenType.IDENTIFIER, TokenType.LEFT_PAREN, TokenType.UNARY_OPERATOR, TokenType.MINUS, TokenType.BOOL_LITERAL, TokenType.INT_LITERAL, TokenType.NEW);
                 break;
         }
-        if (_currentToken.getTokenType() == TokenType.BINARY_OPERATOR) {
-            accept(TokenType.BINARY_OPERATOR);
+        if (_currentToken.getTokenType() == TokenType.BINARY_OPERATOR || _currentToken.getTokenType() == TokenType.MINUS) {
+            accept(TokenType.BINARY_OPERATOR, TokenType.MINUS);
             parseExpression();
         }
     }
